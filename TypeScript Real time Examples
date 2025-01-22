@@ -1,0 +1,259 @@
+Files Structure
+diff
+- index.html
+- app.ts
+- app.js (compiled by TypeScript)
+- tsconfig.json
+
+1. HTML File (index.html)
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple To-Do List</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { margin: 5px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <input type="text" id="taskInput" placeholder="Enter a new task" />
+  <button id="addTaskButton">Add Task</button>
+  <ul id="taskList"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>
+2. TypeScript File (app.ts)
+typescript
+
+// Select elements from the DOM
+const taskInput = document.getElementById("taskInput") as HTMLInputElement;
+const addTaskButton = document.getElementById("addTaskButton") as HTMLButtonElement;
+const taskList = document.getElementById("taskList") as HTMLUListElement;
+
+// Array to store tasks
+let tasks: string[] = [];
+
+// Function to add a new task
+function addTask(): void {
+  const task = taskInput.value.trim();
+  if (task) {
+    tasks.push(task);
+    renderTasks();
+    taskInput.value = ""; // Clear input field
+  } else {
+    alert("Task cannot be empty!");
+  }
+}
+
+// Function to render tasks in the list
+function renderTasks(): void {
+  taskList.innerHTML = ""; // Clear existing tasks
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+    li.textContent = task;
+
+    // Add a delete button to each task
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.style.marginLeft = "10px";
+    deleteButton.onclick = () => {
+      deleteTask(index);
+    };
+
+    li.appendChild(deleteButton);
+    taskList.appendChild(li);
+  });
+}
+
+// Function to delete a task
+function deleteTask(index: number): void {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+
+// Add event listener to the button
+addTaskButton.addEventListener("click", addTask);
+3. TypeScript Configuration File (tsconfig.json)
+
+json
+
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ES6",
+    "strict": true,
+    "outDir": "./",
+    "allowJs": false
+  },
+  "include": ["app.ts"]
+}
+Steps to Run
+Install TypeScript Compiler:
+
+bash
+
+npm install -g typescript
+Compile TypeScript:
+
+tsc app.ts
+This will generate app.js.
+
+Open index.html: Open index.html in a browser to see the app in action.
+
+How It Works
+
+The user types a task into the input field and clicks "Add Task."
+The task is added to an array and displayed in the list.
+Each task has a "Delete" button that allows the user to remove it from the list.
+
+
+
+1. Real-Time Chat Application Backend
+A real-time chat application requires a backend with WebSocket communication to handle messages between users. TypeScript ensures type safety in defining user and message structures.
+
+
+typescript
+
+// Install dependencies: npm install express ws @types/ws
+import express from "express";
+import { WebSocketServer } from "ws";
+
+interface ChatMessage {
+  user: string;
+  message: string;
+  timestamp: Date;
+}
+
+const app = express();
+const PORT = 3000;
+
+// WebSocket server
+const wss = new WebSocketServer({ noServer: true });
+
+wss.on("connection", (ws) => {
+  ws.on("message", (data) => {
+    const chatMessage: ChatMessage = JSON.parse(data.toString());
+    console.log(`Received: ${chatMessage.message} from ${chatMessage.user}`);
+    
+    // Broadcast to all connected clients
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === 1) {
+        client.send(JSON.stringify(chatMessage));
+      }
+    });
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
+Highlights:
+
+ChatMessage interface enforces the structure of chat messages.
+Ensures proper typing for WebSocket communication.
+2. E-Commerce Product Search
+A TypeScript-powered backend API for product search with filtering and sorting.
+
+Code:
+
+typescript
+
+// Install dependencies: npm install express
+import express, { Request, Response } from "express";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+}
+
+const products: Product[] = [
+  { id: 1, name: "Laptop", price: 1200, category: "Electronics" },
+  { id: 2, name: "Chair", price: 200, category: "Furniture" },
+  { id: 3, name: "Headphones", price: 150, category: "Electronics" },
+];
+
+const app = express();
+const PORT = 3000;
+
+// Product search route
+app.get("/search", (req: Request, res: Response) => {
+  const { category, minPrice, maxPrice } = req.query;
+
+  let result = products;
+
+  if (category) {
+    result = result.filter((p) => p.category === category);
+  }
+
+  if (minPrice) {
+    result = result.filter((p) => p.price >= Number(minPrice));
+  }
+
+  if (maxPrice) {
+    result = result.filter((p) => p.price <= Number(maxPrice));
+  }
+
+  res.json(result);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+Highlights:
+
+Query parameters are dynamically filtered using TypeScript's type enforcement.
+Provides a scalable way to add more search criteria.
+
+
+3. Employee Management Dashboard
+A real-time dashboard to display employee data with TypeScript and Angular on the frontend.
+
+Code (Angular Frontend):
+
+typescript
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface Employee {
+  id: number;
+  name: string;
+  role: string;
+  salary: number;
+}
+
+@Component({
+  selector: 'app-employee-dashboard',
+  template: `
+    <h1>Employee Dashboard</h1>
+    <ul>
+      <li *ngFor="let employee of employees">
+        {{ employee.name }} - {{ employee.role }} (${{ employee.salary }})
+      </li>
+    </ul>
+  `,
+})
+export class EmployeeDashboardComponent implements OnInit {
+  employees: Employee[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<Employee[]>('/api/employees').subscribe((data) => {
+      this.employees = data;
+    });
+  }
+}
+Highlights:
+
+Employee interface ensures type safety for API responses.
+Angular's HttpClient leverages TypeScript to avoid runtime errors.
