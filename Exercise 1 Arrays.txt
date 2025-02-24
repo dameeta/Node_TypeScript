@@ -1,0 +1,120 @@
+Exercise 1: Define Typed Arrays
+Define the following arrays with proper types and initialize them with values.
+
+An array of numbers.
+An array of strings.
+An array of booleans.
+A mixed array containing numbers and strings.
+Exercise 2: Array Manipulation
+Perform the following operations on the given array:
+
+Add "grapes" at the end.
+Remove the first element.
+Insert "pineapple" at index 2.
+Reverse the array.
+
+let fruits: string[] = ["apple", "banana", "mango"];
+
+// Your code here
+
+console.log(fruits);  // Expected output depends on the operations
+
+Exercise 3: Map, Filter, and Reduce
+Using the given array, perform the following:
+
+Create a new array that doubles each number.
+Filter out numbers greater than 50.
+Find the sum of all numbers.
+let numbers: number[] = [10, 20, 30, 40, 50, 60];
+
+// Your code here
+
+console.log("Doubled numbers:", doubled);
+console.log("Filtered numbers:", filtered);
+console.log("Sum:", sum);
+Exercise 4: Find and FindIndex
+Using the given array:
+
+Find the first number greater than 25.
+Get the index of the number 40.
+
+let values: number[] = [10, 20, 30, 40, 50];
+
+// Your code here
+
+console.log("First number > 25:", result);
+console.log("Index of 40:", index);
+
+Exercise 5: Sorting an Array
+Sort the following array in ascending and descending order.
+
+let scores: number[] = [55, 23, 87, 12, 99, 38];
+
+// Your code here
+
+console.log("Ascending order:", ascending);
+console.log("Descending order:", descending);
+
+Exercise 6: Tuple Types
+Create a tuple that holds the following information about a student:
+
+Name (string)
+Age (number)
+Enrolled (boolean)
+Then, update the age of the student.
+
+let student: [string, number, boolean] = ["John", 21, true];
+
+// Your code here
+
+console.log(student);
+
+Exercise 7: Working with includes() and some()
+Given an array of roles, check:
+
+If "Admin" exists in the array.
+If at least one role starts with "Super".
+
+let roles: string[] = ["User", "Editor", "Admin", "Moderator"];
+
+// Your code here
+
+console.log("Contains Admin:", hasAdmin);
+console.log("Has Super role:", hasSuper);
+
+Exercise 8: Flattening an Array
+Flatten the following nested array using the flat() method.
+
+let nestedArray: (number | number[])[] = [1, [2, 3], [4, [5, 6]]];
+
+// Your code here
+
+console.log(flattenedArray);
+
+Exercise 9: Merging and Removing Duplicates
+Merge the two arrays and remove duplicates.
+
+let arr1: number[] = [1, 2, 3, 4];
+let arr2: number[] = [3, 4, 5, 6];
+
+// Your code here
+
+console.log(uniqueArray);
+
+Exercise 10: Interface with Arrays
+Define an interface Employee with the following properties:
+
+name (string)
+age (number)
+position (string)
+Then, create an array of employees and filter those older than 30.
+
+interface Employee {
+    name: string;
+    age: number;
+    position: string;
+}
+
+// Create an array of employees and filter employees older than 30
+
+console.log(filteredEmployees);
